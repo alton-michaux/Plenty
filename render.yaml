@@ -1,0 +1,17 @@
+# Render Blueprint: New > Blueprint in the Render dashboard, pick this repo.
+services:
+  - type: web
+    name: plenty
+    runtime: docker
+    plan: free
+    branch: dev
+    healthCheckPath: /api/health
+    envVars:
+      # Paste the Neon connection string (postgresql://...); prompted on first deploy.
+      - key: PLENTY_DATABASE_URL
+        sync: false
+      # Your email: only it can create the first account on a fresh deploy.
+      - key: PLENTY_OWNER_EMAIL
+        sync: false
+      - key: PLENTY_COOKIE_SECURE
+        value: "true"
