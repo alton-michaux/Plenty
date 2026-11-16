@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Receipt</title>
+</head>
+<body>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+ul{margin:0;padding:0;list-style:none}
+.scrn{width:390px;height:844px;background:#F3F1EC;color:#1A1714;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+.scroll{flex:1;overflow:auto;padding:2px 16px 14px}
+.card{background:#FFFFFF;border:1px solid #ECE6DC;border-radius:16px}
+.chk{width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none}
+.li{padding:12px 0;border-bottom:1px solid #EFEAE0;display:flex;gap:11px;align-items:flex-start}
+.li:last-child{border-bottom:none}
+.rcpt{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#8A8275;margin:2px 0 0}
+</style>
+
+<div class="scrn">
+  <header style="padding:14px 12px 10px;background:#FFFFFF;border-bottom:1px solid #EAE4DA">
+    <div style="display:flex;align-items:center;gap:4px">
+      <a href="shop.html" aria-label="Back" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:#1A1714;margin-left:-4px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+      <div style="font-size:16px;font-weight:700">Receipt</div>
+    </div>
+  </header>
+  <div class="scroll">
+    <div class="card" style="padding:12px;margin:12px 0 14px;display:flex;gap:12px;align-items:center">
+      <div style="width:60px;height:76px;border-radius:10px;background:#F0ECE3;border:1px solid #E4DDD0;flex:none;display:flex;align-items:center;justify-content:center;color:#A99F8E">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3L6 21z"/><path d="M9 8h6M9 11.5h6M9 15h4"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <p style="margin:0;font-weight:700;font-size:15px">Food Lion</p>
+        <p style="margin:3px 0 0;font-size:12.5px;color:#6E675C">Nov 19 · 12 items</p>
+        <p style="margin:6px 0 0;font-size:20px;font-weight:700;letter-spacing:-.5px">$24.80</p>
+      </div>
+      <button style="flex:none;align-self:flex-start;height:30px;padding:0 12px;border:1px solid #E0D9CD;border-radius:9px;background:#fff;color:#6E675C;font-weight:600;font-size:12.5px">Retake</button>
+    </div>
+
+    <h2 style="margin:0 2px 8px;font-size:12px;font-weight:700;color:#6E675C;text-transform:uppercase;letter-spacing:.6px">Matched to your list</h2>
+    <ul class="card" style="padding:4px 14px;margin-bottom:12px">
+      <li class="li"><span class="chk" style="background:#E6F1EC;color:#0F7A5A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><div style="flex:1;min-width:0"><p style="margin:0;font-weight:600;font-size:14px">Chicken thighs</p><p class="rcpt">BNLS CHKN THGH 2.05 LB</p></div><span style="font-weight:600;font-size:13.5px">$4.51</span></li>
+      <li class="li"><span class="chk" style="background:#E6F1EC;color:#0F7A5A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><div style="flex:1;min-width:0"><p style="margin:0;font-weight:600;font-size:14px">Bell peppers</p><p class="rcpt">BELL PEPPER GRN ×3</p></div><span style="font-weight:600;font-size:13.5px">$2.08</span></li>
+      <li class="li"><span class="chk" style="background:#E6F1EC;color:#0F7A5A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><div style="flex:1;min-width:0"><p style="margin:0;font-weight:600;font-size:14px">Shredded cheese</p><p class="rcpt">KRFT SHRD CHDR 8OZ</p></div><span style="font-weight:600;font-size:13.5px">$2.50</span></li>
+    </ul>
+
+    <h2 style="margin:0 2px 8px;font-size:12px;font-weight:700;color:#9A6A10;text-transform:uppercase;letter-spacing:.6px">Needs a quick check</h2>
+    <div class="card" style="padding:12px 14px;margin-bottom:10px;border-color:#EAD9B3;background:#FCF7EC">
+      <div style="display:flex;gap:11px;align-items:flex-start">
+        <span class="chk" style="background:#F6E8C8;color:#9A6A10"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 16h0"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <div style="flex:1;min-width:0"><p class="rcpt" style="margin:0">GV RICE 2LB</p><p style="margin:4px 0 0;font-size:13px;color:#6E675C">Looks like <strong style="color:#1A1714">White rice</strong> — right?</p></div>
+        <span style="font-weight:600;font-size:13.5px">$1.68</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:11px">
+        <button style="flex:1;height:38px;border:none;border-radius:10px;background:#0F7A5A;color:#fff;font-weight:600;font-size:13px">Yes, match</button>
+        <button style="flex:none;height:38px;padding:0 14px;border:1px solid #E0D9CD;border-radius:10px;background:#fff;color:#6E675C;font-weight:600;font-size:13px">Pick another</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:11px 14px;margin-bottom:14px;display:flex;gap:11px;align-items:center">
+      <span class="chk" style="background:#F0ECE3;color:#8A8275"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div style="flex:1;min-width:0"><p style="margin:0;font-weight:600;font-size:14px">Vanilla ice cream</p><p class="rcpt">FL VANILLA ICE CRM — not on your list</p></div>
+      <span style="font-weight:600;font-size:13.5px;color:#8A8275">$3.50</span>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:#E6F1EC;border:1px solid #CFE6DB;border-radius:13px;padding:11px 12px">
+      <span style="color:#0E6B50;flex:none"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 8l5-5 5 5"/></svg></span>
+      <p style="margin:0;font-size:12.5px;color:#0E6B50;line-height:1.4">Prices saved. Your list estimates get sharper every trip.</p>
+    </div>
+  </div>
+
+  <div style="padding:12px 16px 16px;background:#FFFFFF;border-top:1px solid #EAE4DA">
+    <a href="spending.html" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:14px;background:#0F7A5A;color:#fff;font-size:15px;font-weight:600">Save receipt</a>
+  </div>
+</div>
+
+
+</body>
+</html>

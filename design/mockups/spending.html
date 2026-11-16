@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spending</title>
+</head>
+<body>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.scrn{width:390px;height:844px;background:#F3F1EC;color:#1A1714;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+.scroll{flex:1;overflow:auto;padding:2px 16px 18px}
+.nav{display:flex;border-top:1px solid #E7E1D7;background:#FFFFFF}
+.nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 16px;font-size:11px;font-weight:500;color:#8A8275}
+.nav a.on{color:#0F7A5A}
+.card{background:#FFFFFF;border:1px solid #ECE6DC;border-radius:16px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:600}
+.bar{height:9px;border-radius:999px;background:#ECE6DC;overflow:hidden}
+.bar>span{display:block;height:100%;border-radius:999px}
+</style>
+
+<div class="scrn">
+  <header style="padding:18px 16px 4px">
+    <h1 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.5px">Spending</h1>
+    <p style="margin:3px 0 0;color:#6E675C;font-size:13px">Pay period · Nov 6 – Nov 20</p>
+  </header>
+  <div class="scroll">
+    <div class="card" style="padding:16px;margin:8px 0 12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:12px;font-weight:700;color:#6E675C;text-transform:uppercase;letter-spacing:.6px">Food budget</span>
+        <span style="font-size:15px;font-weight:700;color:#0F7A5A">$58 left</span>
+      </div>
+      <div style="margin:10px 0 2px;display:flex;align-items:baseline;gap:7px">
+        <span style="font-size:32px;font-weight:700;letter-spacing:-1px">$142</span>
+        <span style="font-size:15px;color:#8A8275">of $200 spent</span>
+      </div>
+      <div class="bar" style="margin-top:10px"><span style="width:71%;background:#0F7A5A"></span></div>
+      <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12.5px;color:#6E675C">4 days to payday</span>
+        <span class="pill" style="background:#E6F1EC;color:#0F7A5A">$12 under pace</span>
+      </div>
+    </div>
+
+    <div class="card" style="padding:14px 16px;margin-bottom:12px">
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px"><span style="font-weight:600">Groceries</span><span style="font-weight:700">$108</span></div>
+        <div class="bar"><span style="width:54%;background:#0F7A5A"></span></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px"><span style="font-weight:600">Eating out</span><span style="font-weight:700">$34</span></div>
+        <div class="bar"><span style="width:17%;background:#C99A3A"></span></div>
+      </div>
+    </div>
+
+    <button style="width:100%;height:48px;border:1px solid #E0D9CD;border-radius:14px;background:#fff;color:#1A1714;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Log a night eating out
+    </button>
+
+    <div class="card" style="padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">
+      <div style="width:36px;height:36px;border-radius:10px;background:#E6F1EC;color:#0F7A5A;flex:none;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l5-5 4 4 5-6"/><path d="M14 8h5v5" /></svg></div>
+      <div style="flex:1"><p style="margin:0;font-weight:600;font-size:14px">Eating out is way down</p><p style="margin:3px 0 0;font-size:12.5px;color:#6E675C;line-height:1.45">$34 so far. Last period you'd spent <strong style="color:#1A1714">$159</strong> by this point.</p></div>
+    </div>
+
+    <div class="card" style="padding:14px 16px;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start">
+      <div style="width:36px;height:36px;border-radius:10px;background:#F0ECE3;color:#6E675C;flex:none;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v14M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg></div>
+      <div style="flex:1"><p style="margin:0;font-weight:600;font-size:14px">Cooked meals averaged $1.60 a serving</p><p style="margin:3px 0 0;font-size:12.5px;color:#6E675C;line-height:1.45">Across 6 dinners cooked this period.</p></div>
+    </div>
+
+    <div class="card" style="padding:13px 16px;display:flex;align-items:center;gap:10px">
+      <div style="flex:1"><p style="margin:0;font-weight:600;font-size:14px">Rate this week's dinners</p><p style="margin:2px 0 0;font-size:12.5px;color:#6E675C">Keep the hits, drop the misses</p></div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A8275" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Main">
+    <a href="recipes.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M6 17h12"/></svg><span>Recipes</span></a>
+    <a href="plan.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg><span>Plan</span></a>
+    <a href="list.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 5.5l1 1 1.6-2M4 11.5l1 1 1.6-2M4 17.5l1 1 1.6-2"/></svg><span>List</span></a>
+    <a class="on" href="spending.html" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="12" rx="2.5"/><path d="M16 13h2.5"/></svg><span>Spending</span></a>
+  </nav>
+</div>
+
+
+</body>
+</html>

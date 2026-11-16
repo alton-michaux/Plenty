@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shopping</title>
+</head>
+<body>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+ul{margin:0;padding:0;list-style:none}
+.scrn{width:390px;height:844px;background:#F3F1EC;color:#1A1714;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+.scroll{flex:1;overflow:auto;background:#FFFFFF}
+.aisle{font-size:11.5px;font-weight:700;color:#8A8275;text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 4px;background:#FAF8F3}
+.big{display:flex;align-items:center;gap:14px;padding:15px 16px;border-bottom:1px solid #F0EBE1}
+.big input{width:24px;height:24px;accent-color:#0F7A5A;flex:none}
+.big label{flex:1;min-width:0;font-size:15.5px;font-weight:500}
+.big .sub{font-size:12.5px;color:#8A8275;font-weight:400;margin-top:2px}
+.done label{text-decoration:line-through;color:#AEA69A}
+</style>
+
+<div class="scrn">
+  <header style="padding:14px 12px 14px;background:#FFFFFF;border-bottom:1px solid #EAE4DA">
+    <div style="display:flex;align-items:center;gap:4px">
+      <a href="list.html" aria-label="Back to list" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:#1A1714;margin-left:-4px">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:700">Shopping · Food Lion</div><div style="font-size:12.5px;color:#6E675C">6 in cart · 6 to go</div></div>
+    </div>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:13px;color:#6E675C">Running total</span>
+      <span style="font-size:14px"><strong style="font-size:16px">$12.70</strong> <span style="color:#8A8275">of $25.90 est</span></span>
+    </div>
+    <div style="margin-top:7px;height:8px;border-radius:999px;background:#ECE6DC;overflow:hidden"><div style="width:49%;height:100%;background:#0F7A5A;border-radius:999px"></div></div>
+  </header>
+
+  <div class="scroll">
+    <div class="aisle">Produce</div>
+    <ul>
+      <li class="big done"><input type="checkbox" checked aria-label="Yellow onions, in cart"><label>Yellow onions<div class="sub">2 · $0.80</div></label></li>
+      <li class="big done"><input type="checkbox" checked aria-label="Bell peppers, in cart"><label>Bell peppers<div class="sub">3 · $2.10</div></label></li>
+      <li class="big"><input type="checkbox" aria-label="Roma tomatoes"><label>Roma tomatoes<div class="sub">4 · $1.60</div></label></li>
+    </ul>
+    <div class="aisle">Meat</div>
+    <ul>
+      <li class="big done"><input type="checkbox" checked aria-label="Chicken thighs, in cart"><label>Chicken thighs<div class="sub">2 lb · $4.40</div></label></li>
+      <li class="big"><input type="checkbox" aria-label="Smoked sausage"><label>Smoked sausage<div class="sub">14 oz · $3.20</div></label></li>
+      <li class="big done"><input type="checkbox" checked aria-label="Canned tuna, in cart"><label>Canned tuna<div class="sub">2 · $1.80</div></label></li>
+    </ul>
+    <div class="aisle">Dairy &amp; refrigerated</div>
+    <ul>
+      <li class="big done"><input type="checkbox" checked aria-label="Shredded cheese, in cart"><label>Shredded cheese<div class="sub">8 oz · $2.50</div></label></li>
+      <li class="big"><input type="checkbox" aria-label="Eggs"><label>Eggs<div class="sub">dozen · $2.20</div></label></li>
+      <li class="big done"><input type="checkbox" checked aria-label="Flour tortillas, in cart"><label>Flour tortillas<div class="sub">10 ct · $2.80</div></label></li>
+    </ul>
+    <div class="aisle">Pantry</div>
+    <ul>
+      <li class="big"><input type="checkbox" aria-label="White rice"><label>White rice<div class="sub">store brand, 2 lb · $1.90</div></label></li>
+      <li class="big"><input type="checkbox" aria-label="Black beans"><label>Black beans<div class="sub">2 cans · $1.40</div></label></li>
+      <li class="big"><input type="checkbox" aria-label="Pasta"><label>Pasta<div class="sub">1 lb · $1.20</div></label></li>
+    </ul>
+  </div>
+
+  <div style="padding:12px 16px 16px;background:#FFFFFF;border-top:1px solid #EAE4DA">
+    <a href="receipt.html" style="display:flex;align-items:center;justify-content:center;gap:9px;height:52px;border-radius:14px;background:#0F7A5A;color:#fff;font-size:15px;font-weight:600">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/></svg>
+      Done — scan receipt
+    </a>
+  </div>
+</div>
+
+
+</body>
+</html>

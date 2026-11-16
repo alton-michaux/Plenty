@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recipes</title>
+</head>
+<body>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.scrn{width:390px;height:844px;background:#F3F1EC;color:#1A1714;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+.scroll{flex:1;overflow:auto;padding:2px 16px 18px}
+.nav{display:flex;border-top:1px solid #E7E1D7;background:#FFFFFF}
+.nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 16px;font-size:11px;font-weight:500;color:#8A8275}
+.nav a.on{color:#0F7A5A}
+.card{background:#FFFFFF;border:1px solid #ECE6DC;border-radius:16px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:600}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+
+<div class="scrn">
+  <header style="padding:18px 16px 10px">
+    <h1 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.5px">Recipes</h1>
+    <p style="margin:3px 0 0;color:#6E675C;font-size:13px">32 saved · sorted by cheapest per serving</p>
+    <label class="sr" for="q">Search recipes</label>
+    <input id="q" type="search" placeholder="Search recipes" style="margin-top:13px;width:100%;height:42px;border:1px solid #E0D9CD;border-radius:12px;background:#FFFFFF;padding:0 14px;font-size:14px;color:#1A1714;font-family:inherit">
+  </header>
+  <div class="scroll">
+    <div style="margin:6px 0 18px;border:1.5px dashed #CFC6B6;border-radius:16px;background:#FBFAF6;padding:16px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:40px;height:40px;border-radius:12px;background:#E6F1EC;display:flex;align-items:center;justify-content:center;color:#0F7A5A;flex:none">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+        <div style="flex:1;min-width:0">
+          <p style="margin:0;font-weight:600;font-size:15px">Add a recipe</p>
+          <p style="margin:3px 0 11px;color:#6E675C;font-size:13px;line-height:1.45">Paste a link, or share straight from TikTok, Instagram or the web.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill" style="background:#F0EDE6;color:#6E675C">TikTok</span>
+            <span class="pill" style="background:#F0EDE6;color:#6E675C">Instagram</span>
+            <span class="pill" style="background:#F0EDE6;color:#6E675C">Web link</span>
+            <span class="pill" style="background:#F0EDE6;color:#6E675C">Screenshot</span>
+          </div>
+        </div>
+      </div>
+      <button style="margin-top:14px;width:100%;height:44px;border:none;border-radius:12px;background:#0F7A5A;color:#fff;font-size:14px;font-weight:600">Paste a link</button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin:0 2px 10px">
+      <h2 style="margin:0;font-size:12px;font-weight:700;color:#6E675C;text-transform:uppercase;letter-spacing:0.6px">Your recipes</h2>
+      <span style="font-size:12px;color:#8A8275">cheapest first</span>
+    </div>
+
+    <article class="card" style="padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border-radius:12px;background:#E6F1EC;flex:none;display:flex;align-items:center;justify-content:center;color:#0F7A5A">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 2 2M8 3v9m0 0v9M16 3c-1.3 1-2 3-2 5.5S14.7 13 16 13v8"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:15px">Black bean quesadillas</p>
+        <div style="margin-top:5px;display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6E675C">
+          <span style="color:#0F7A5A;font-weight:700">$1.15/serving</span>
+          <span aria-hidden="true">·</span><span>20 min</span>
+          <span aria-hidden="true">·</span><span>serves 4</span>
+        </div>
+        <div style="margin-top:8px"><span class="pill" style="background:#E6F1EC;color:#0F7A5A">Kid favorite</span></div>
+      </div>
+    </article>
+
+    <article class="card" style="padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border-radius:12px;background:#E6F1EC;flex:none;display:flex;align-items:center;justify-content:center;color:#0F7A5A">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 2 2M8 3v9m0 0v9M16 3c-1.3 1-2 3-2 5.5S14.7 13 16 13v8"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:15px">Chicken &amp; rice skillet</p>
+        <div style="margin-top:5px;display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6E675C">
+          <span style="color:#0F7A5A;font-weight:700">$1.80/serving</span>
+          <span aria-hidden="true">·</span><span>35 min</span>
+          <span aria-hidden="true">·</span><span>serves 4</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" style="padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border-radius:12px;background:#E6F1EC;flex:none;display:flex;align-items:center;justify-content:center;color:#0F7A5A">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 2 2M8 3v9m0 0v9M16 3c-1.3 1-2 3-2 5.5S14.7 13 16 13v8"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:15px">Sheet-pan sausage &amp; veg</p>
+        <div style="margin-top:5px;display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6E675C">
+          <span style="color:#0F7A5A;font-weight:700">$2.10/serving</span>
+          <span aria-hidden="true">·</span><span>30 min</span>
+          <span aria-hidden="true">·</span><span>serves 4</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" style="padding:12px;margin-bottom:4px;display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border-radius:12px;background:#F3EAD7;flex:none;display:flex;align-items:center;justify-content:center;color:#B07A12">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 2 2M8 3v9m0 0v9M16 3c-1.3 1-2 3-2 5.5S14.7 13 16 13v8"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <p style="margin:0;font-weight:600;font-size:15px">Tuna pasta, for one</p>
+        <div style="margin-top:5px;display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6E675C">
+          <span style="color:#0F7A5A;font-weight:700">$1.40/serving</span>
+          <span aria-hidden="true">·</span><span>15 min</span>
+          <span aria-hidden="true">·</span><span>serves 1</span>
+        </div>
+        <div style="margin-top:8px"><span class="pill" style="background:#F3EAD7;color:#9A6A10">Solo night</span></div>
+      </div>
+    </article>
+  </div>
+
+  <nav class="nav" aria-label="Main">
+    <a class="on" href="recipes.html" aria-current="page">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M6 17h12"/></svg>
+      <span>Recipes</span>
+    </a>
+    <a href="plan.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg>
+      <span>Plan</span>
+    </a>
+    <a href="list.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 5.5l1 1 1.6-2M4 11.5l1 1 1.6-2M4 17.5l1 1 1.6-2"/></svg>
+      <span>List</span>
+    </a>
+    <a href="spending.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="12" rx="2.5"/><path d="M3.5 10h13.5a2 2 0 0 1 0 0M16 13h2.5"/></svg>
+      <span>Spending</span>
+    </a>
+  </nav>
+</div>
+
+
+</body>
+</html>
