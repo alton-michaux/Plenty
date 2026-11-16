@@ -41,7 +41,7 @@ Full brief: the build plan the owner wrote (not in repo). Visual spec: `design/m
 ## Commands
 
 ```sh
-docker compose up -d                      # Postgres 17 on localhost:5433 (dbs: plenty, plenty_test)
+docker compose up -d                      # Postgres 18 (matches Neon) on localhost:5433 (dbs: plenty, plenty_test)
 
 cd backend
 uv sync
