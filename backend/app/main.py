@@ -2,7 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api import auth, household
@@ -36,6 +36,13 @@ for router in (auth.router, household.router):
 @app.get("/api/health")
 def health():
     return {"ok": True}
+
+
+@app.post("/share-target", include_in_schema=False)
+def share_target_fallback():
+    """The service worker normally answers Android share-sheet posts (web/public/sw.js).
+    If it wasn't active yet, the post lands here: send the user on so they can share again."""
+    return RedirectResponse("/share?missed=1", status_code=303)
 
 
 # In production the API also serves the built web app, so everything is one origin.

@@ -2,7 +2,6 @@
 name = "plenty"
 version = "0.1.0"
 description = "Plenty: meal planning and a food budget that fits the pay period"
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.20.1",

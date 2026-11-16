@@ -74,3 +74,9 @@ def test_household_setup_and_period(client, monkeypatch):
 def test_household_validates(client):
     assert client.put("/api/household", json={**SETUP, "budget_cents": 0}).status_code == 422
     assert client.put("/api/household", json={**SETUP, "kids_to_slot": "brunch"}).status_code == 422
+
+
+def test_share_target_fallback_redirects(new_client):
+    r = new_client().post("/share-target", data={"text": "hi"}, follow_redirects=False)
+    assert r.status_code == 303
+    assert r.headers["location"] == "/share?missed=1"
