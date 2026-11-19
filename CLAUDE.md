@@ -90,9 +90,9 @@ reads it same-origin with the session cookie. If the worker isn't active yet, Fa
 ## Phases (one at a time; show a short plan and wait for OK before each)
 
 - [x] **0. Setup**: scaffold, schema, deploy, installable PWA with share target.
-- [x] **1. Plan and list** (built; done when a real kid week is shopped in one trip): recipe box (share sheet, link, text, screenshot -> extraction -> confirm
-      screen), planner with kid and solo days, merged list by aisle, shop mode.
-      Done: a real kid week planned and shopped in one trip.
+- [ ] **1. Plan and list** (built 2026-11-19; awaiting a real week): recipe box (share sheet, link,
+      text, screenshot -> extraction -> confirm screen), planner with kid and solo days, merged
+      list by aisle, shop mode. Done: a real kid week planned and shopped in one trip.
 - [ ] **2. Budget and price book**: receipt photo -> line items -> Products + PriceObservations,
       one-tap eating-out log, pay-period budget bar with pace. Done: list estimate within 10% of receipt.
 - [ ] **3. Optimizer**: unit price, package rounding, leftovers, swaps by savings, second store only
