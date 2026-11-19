@@ -53,3 +53,32 @@ def in_window(day: date, slot: Slot, start: MealPoint, end: MealPoint) -> bool:
     i = MealPoint(day.weekday(), slot).index
     a, b = start.index, end.index
     return a <= i <= b if a <= b else i >= a or i <= b
+
+
+def week_start(today: date, start_weekday: int) -> date:
+    """The most recent `start_weekday` on or before today. Plenty's week starts the day the kids
+    arrive (Wed by default), so one shopping trip covers one stay plus the solo days after it."""
+    return today - timedelta(days=(today.weekday() - start_weekday) % 7)
+
+
+@dataclass(frozen=True)
+class PlannedSlot:
+    day: date
+    slot: Slot
+    kids_home: bool
+    servings: int  # default servings: 1 + kids when they're home
+
+
+def week_slots(
+    start: date, kids: int, kids_from: MealPoint, kids_to: MealPoint
+) -> list[PlannedSlot]:
+    """The meals to plan in a week: every dinner, plus lunch on days the kids are home for lunch
+    but gone by dinner (their last day, when lunch is usually leftovers)."""
+    out: list[PlannedSlot] = []
+    for i in range(7):
+        day = start + timedelta(days=i)
+        home = {s: kids > 0 and in_window(day, s, kids_from, kids_to) for s in SLOTS}
+        if home["lunch"] and not home["dinner"]:
+            out.append(PlannedSlot(day, "lunch", True, 1 + kids))
+        out.append(PlannedSlot(day, "dinner", home["dinner"], 1 + kids if home["dinner"] else 1))
+    return out

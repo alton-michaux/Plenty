@@ -61,3 +61,36 @@ def test_window_wraps_past_sunday():
     assert in_window(date(2026, 11, 23), "breakfast", fri_dinner, mon_breakfast)  # Monday
     assert not in_window(date(2026, 11, 23), "lunch", fri_dinner, mon_breakfast)
     assert not in_window(WED, "dinner", fri_dinner, mon_breakfast)
+
+
+def test_week_start():
+    from meal.schedule import week_start
+
+    assert week_start(date(2026, 11, 19), 2) == date(2026, 11, 18)  # Thu -> Wed
+    assert week_start(date(2026, 11, 18), 2) == date(2026, 11, 18)  # Wed itself
+    assert week_start(date(2026, 11, 24), 2) == date(2026, 11, 18)  # Tue -> previous Wed
+
+
+def test_week_slots_kid_week():
+    from meal.schedule import week_slots
+
+    slots = week_slots(WED, 3, WED_DINNER, SAT_LUNCH)
+    got = [(s.day.strftime("%a"), s.slot, s.servings) for s in slots]
+    assert got == [
+        ("Wed", "dinner", 4),
+        ("Thu", "dinner", 4),
+        ("Fri", "dinner", 4),
+        ("Sat", "lunch", 4),  # last kid meal
+        ("Sat", "dinner", 1),
+        ("Sun", "dinner", 1),
+        ("Mon", "dinner", 1),
+        ("Tue", "dinner", 1),
+    ]
+
+
+def test_week_slots_no_kids():
+    from meal.schedule import week_slots
+
+    slots = week_slots(WED, 0, WED_DINNER, SAT_LUNCH)
+    assert [s.slot for s in slots] == ["dinner"] * 7
+    assert all(s.servings == 1 and not s.kids_home for s in slots)
