@@ -24,6 +24,10 @@ class Config(BaseSettings):
     session_days: int = 30
     # Directory with the built web app to serve (set in the Docker image).
     static_dir: str | None = None
+    # Reads recipes from captions, pasted text and screenshots. Without it, imports fall back to
+    # the plain-text parser (links with recipe data and pasted ingredient lists still work).
+    anthropic_api_key: str | None = None
+    anthropic_model: str = "claude-opus-5-5"
 
     @field_validator("database_url")
     @classmethod
