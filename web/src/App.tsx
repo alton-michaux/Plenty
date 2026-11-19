@@ -1,7 +1,11 @@
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth, useHousehold } from './lib/hooks'
+import type { Household } from './api/client'
 import LoginPage from './pages/LoginPage'
 import PlanPage from './pages/PlanPage'
+import RecipePage from './pages/RecipePage'
+import RecipesPage from './pages/RecipesPage'
+import { EditRecipePage, ReviewDraftPage } from './pages/ReviewRecipePage'
 import SetupPage from './pages/SetupPage'
 import SharePage from './pages/SharePage'
 import StubPage from './pages/StubPage'
@@ -36,32 +40,34 @@ function SignedIn() {
   if (household === undefined) return null
   if (household === null) return <SetupPage />
   return (
+    <Routes>
+      {/* Full-screen flows with their own bottom bar */}
+      <Route path="/recipes/review" element={<ReviewDraftPage />} />
+      <Route path="/recipes/:id/edit" element={<EditRecipePage />} />
+      <Route path="/setup" element={<SetupPage household={household} />} />
+      <Route path="*" element={<Tabs household={household} />} />
+    </Routes>
+  )
+}
+
+function Tabs({ household }: { household: Household }) {
+  return (
     <div className="mx-auto flex min-h-dvh max-w-xl flex-col">
       <main className="flex-1 px-4 pt-[max(1.1rem,env(safe-area-inset-top))] pb-28">
         <Routes>
           <Route path="/" element={<Navigate to="/plan" replace />} />
           <Route path="/plan" element={<PlanPage household={household} />} />
-          <Route
-            path="/recipes"
-            element={
-              <StubPage
-                title="Recipes"
-                note="Your recipe box, with share-sheet and paste-in import, lands in phase 1."
-              />
-            }
-          />
+          <Route path="/recipes" element={<RecipesPage />} />
+          <Route path="/recipes/:id" element={<RecipePage />} />
           <Route
             path="/list"
-            element={
-              <StubPage title="Grocery list" note="One merged list by aisle, plus shop mode, lands in phase 1." />
-            }
+            element={<StubPage title="Grocery list" note="One merged list by aisle, plus shop mode, coming next." />}
           />
           <Route
             path="/spending"
             element={<StubPage title="Spending" note="Receipts, the eating-out log and budget pace land in phase 2." />}
           />
           <Route path="/share" element={<SharePage />} />
-          <Route path="/setup" element={<SetupPage household={household} />} />
           <Route path="*" element={<Navigate to="/plan" replace />} />
         </Routes>
       </main>

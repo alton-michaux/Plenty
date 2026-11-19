@@ -1,5 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { ErrorText } from '../components/Field'
+import { saveDraft } from '../lib/draft'
+import { useImport, type ImportInput } from '../lib/hooks'
+import { downscale } from '../lib/image'
+import { AddRecipe } from './RecipesPage'
 import { PageHeader } from './StubPage'
 
 type Shared = {
@@ -7,33 +12,59 @@ type Shared = {
   text: string
   url: string
   files: { key: string; name: string; type: string; size: number }[]
-  received_at: string
 }
 
-/** What the service worker parked from the Android share sheet (see public/sw.js).
- * Phase 0 just shows it; phase 1 sends it to recipe extraction and the confirm screen. */
+const INBOX = 'share-inbox'
+const URL_RE = /https?:\/\/\S+/
+
+/** Read what the service worker parked from the Android share sheet (see public/sw.js). */
+async function readInbox(): Promise<{ shared: Shared; image: Blob | null } | null> {
+  if (!('caches' in window)) return null
+  const cache = await caches.open(INBOX)
+  const meta = await cache.match('/share-inbox/meta')
+  if (!meta) return null
+  const shared: Shared = await meta.json()
+  const first = shared.files[0] && (await cache.match(shared.files[0].key))
+  return { shared, image: first ? await first.blob() : null }
+}
+
+const clearInbox = () => caches.delete(INBOX)
+
+/** Pick what to send: a screenshot beats text; a caption with a recipe beats a bare link. */
+async function toImport({ shared, image }: { shared: Shared; image: Blob | null }): Promise<ImportInput | null> {
+  if (image) return { kind: 'image', file: await downscale(new File([image], 'shared', { type: image.type })) }
+  const all = [shared.title, shared.text].filter(Boolean).join('\n').trim()
+  const url = shared.url || all.match(URL_RE)?.[0] || ''
+  const words = all.replace(URL_RE, '').trim()
+  if (words.length >= 60) return { kind: 'text', text: all, url: url || undefined }
+  if (url) return { kind: 'link', url }
+  return null
+}
+
 export default function SharePage() {
+  const navigate = useNavigate()
   const [params] = useSearchParams()
-  const [shared, setShared] = useState<Shared | null | undefined>(undefined)
-  const [images, setImages] = useState<string[]>([])
+  const imp = useImport()
+  const started = useRef(false)
+  const [state, setState] = useState<'reading' | 'empty' | 'failed'>('reading')
 
   useEffect(() => {
-    const urls: string[] = []
+    if (started.current) return // StrictMode runs effects twice in dev
+    started.current = true
     ;(async () => {
-      if (!('caches' in window)) return setShared(null)
-      const cache = await caches.open('share-inbox')
-      const meta = await cache.match('/share-inbox/meta')
-      if (!meta) return setShared(null)
-      const data: Shared = await meta.json()
-      for (const f of data.files) {
-        const r = await cache.match(f.key)
-        if (r) urls.push(URL.createObjectURL(await r.blob()))
-      }
-      setImages(urls)
-      setShared(data)
+      const inbox = await readInbox()
+      const input = inbox && (await toImport(inbox))
+      if (!input) return setState('empty')
+      imp.mutate(input, {
+        onSuccess: async (draft) => {
+          await clearInbox()
+          saveDraft(draft)
+          navigate('/recipes/review', { replace: true })
+        },
+        onError: () => setState('failed'),
+      })
     })()
-    return () => urls.forEach((u) => URL.revokeObjectURL(u))
-  }, [])
+  }, [imp, navigate])
 
   const problem = params.has('error')
     ? "The share couldn't be read. Try sharing again."
@@ -43,41 +74,28 @@ export default function SharePage() {
 
   return (
     <>
-      <PageHeader title="Shared to Plenty" sub="Recipe import arrives in phase 1. For now this shows what came in." />
+      <PageHeader title="Shared to Plenty" />
       {problem && (
         <div className="card mt-3 border-amber-edge bg-amber-tint p-4 text-sm text-amber-dark">{problem}</div>
       )}
-      {shared === null && !problem && (
-        <div className="card mt-3 p-4 text-sm text-muted">
+      {state === 'reading' && !problem && (
+        <p className="mt-6 flex items-center gap-2 text-sm font-medium text-brand">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-transparent" />
+          Reading the recipe… this can take a few seconds.
+        </p>
+      )}
+      {state === 'failed' && (
+        <div className="mt-3">
+          <ErrorText error={imp.error} />
+          <p className="mt-2 text-sm text-muted">Paste the caption or pick a screenshot instead:</p>
+        </div>
+      )}
+      {state === 'empty' && !problem && (
+        <p className="mt-3 text-sm text-muted">
           Nothing shared yet. From TikTok, Instagram or a recipe site, tap Share and pick Plenty.
-        </div>
+        </p>
       )}
-      {shared && (
-        <div className="card mt-3 space-y-3 p-4 text-sm">
-          <Row label="Title" value={shared.title} />
-          <Row label="Text" value={shared.text} />
-          <Row label="Link" value={shared.url} />
-          {images.map((src, i) => (
-            <img
-              key={src}
-              src={src}
-              alt={shared.files[i]?.name ?? ''}
-              className="max-h-80 rounded-xl border border-line"
-            />
-          ))}
-          <p className="text-xs text-faint">Received {new Date(shared.received_at).toLocaleString()}</p>
-        </div>
-      )}
+      {(state !== 'reading' || problem) && <AddRecipe initialMode="text" />}
     </>
-  )
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-  if (!value) return null
-  return (
-    <div>
-      <p className="section-label">{label}</p>
-      <p className="mt-0.5 break-words whitespace-pre-wrap">{value}</p>
-    </div>
   )
 }

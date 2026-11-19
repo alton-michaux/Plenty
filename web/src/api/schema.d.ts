@@ -113,6 +113,145 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/import/link': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Import Link */
+    post: operations['import_link_api_import_link_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/import/text': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Import Text */
+    post: operations['import_text_api_import_text_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/import/image': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Import Image */
+    post: operations['import_image_api_import_image_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/uploads/{upload_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get Upload */
+    get: operations['get_upload_api_uploads__upload_id__get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/recipes': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List Recipes */
+    get: operations['list_recipes_api_recipes_get']
+    put?: never
+    /** Create Recipe */
+    post: operations['create_recipe_api_recipes_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/recipes/{recipe_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get Recipe */
+    get: operations['get_recipe_api_recipes__recipe_id__get']
+    /** Update Recipe */
+    put: operations['update_recipe_api_recipes__recipe_id__put']
+    post?: never
+    /** Delete Recipe */
+    delete: operations['delete_recipe_api_recipes__recipe_id__delete']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/ingredients': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List Ingredients */
+    get: operations['list_ingredients_api_ingredients_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/aisles': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List Aisles */
+    get: operations['list_aisles_api_aisles_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/health': {
     parameters: {
       query?: never
@@ -140,6 +279,11 @@ export interface components {
       /** Signup Open */
       signup_open: boolean
     }
+    /** Body_import_image_api_import_image_post */
+    Body_import_image_api_import_image_post: {
+      /** File */
+      file: string
+    }
     /** Credentials */
     Credentials: {
       /**
@@ -158,6 +302,33 @@ export interface components {
       new_email?: string | null
       /** New Password */
       new_password?: string | null
+    }
+    /** DraftLine */
+    DraftLine: {
+      /** Original */
+      original: string
+      /** Quantity */
+      quantity?: number | null
+      /** Unit */
+      unit?: string | null
+      /** Name */
+      name: string
+      /**
+       * Aisle
+       * @default Other
+       */
+      aisle: string
+      /** Note */
+      note?: string | null
+      /** Ingredient Id */
+      ingredient_id?: number | null
+      /** Problem */
+      problem?: string | null
+      /**
+       * Matched
+       * @default false
+       */
+      matched: boolean
     }
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -253,6 +424,43 @@ export interface components {
       kids_to_slot: 'breakfast' | 'lunch' | 'dinner'
       period: components['schemas']['PeriodOut']
     }
+    /** IngredientOut */
+    IngredientOut: {
+      /** Id */
+      id: number
+      /** Name */
+      name: string
+      /** Aisle */
+      aisle: string
+    }
+    /** LineIn */
+    LineIn: {
+      /** Original */
+      original: string
+      /** Quantity */
+      quantity?: number | null
+      /** Unit */
+      unit?: string | null
+      /** Name */
+      name: string
+      /**
+       * Aisle
+       * @default Other
+       */
+      aisle: string
+      /** Note */
+      note?: string | null
+      /** Ingredient Id */
+      ingredient_id?: number | null
+    }
+    /** LinkImport */
+    LinkImport: {
+      /**
+       * Url
+       * Format: uri
+       */
+      url: string
+    }
     /** LoginBody */
     LoginBody: {
       /** Email */
@@ -288,6 +496,130 @@ export interface components {
       day: number
       /** Length */
       length: number
+    }
+    /** RecipeDraft */
+    RecipeDraft: {
+      /** Title */
+      title: string
+      /** Servings */
+      servings: number | null
+      /** Minutes */
+      minutes: number | null
+      /** Steps */
+      steps: string[]
+      /** Source Url */
+      source_url: string | null
+      /**
+       * Source Kind
+       * @enum {string}
+       */
+      source_kind: 'link' | 'text' | 'image' | 'manual'
+      /** Image Id */
+      image_id?: number | null
+      /** Lines */
+      lines: components['schemas']['DraftLine'][]
+      /**
+       * Read By
+       * @enum {string}
+       */
+      read_by: 'model' | 'page' | 'parser'
+      /** Warning */
+      warning?: string | null
+    }
+    /** RecipeIn */
+    RecipeIn: {
+      /** Title */
+      title: string
+      /** Servings */
+      servings?: number | null
+      /** Minutes */
+      minutes?: number | null
+      /** Steps */
+      steps?: string[]
+      /** Tags */
+      tags?: string[]
+      /** Source Url */
+      source_url?: string | null
+      /**
+       * Source Kind
+       * @default manual
+       * @enum {string}
+       */
+      source_kind: 'link' | 'text' | 'image' | 'manual'
+      /** Image Id */
+      image_id?: number | null
+      /** Lines */
+      lines: components['schemas']['LineIn'][]
+    }
+    /** RecipeLineOut */
+    RecipeLineOut: {
+      /** Id */
+      id: number
+      /** Original */
+      original: string
+      /** Quantity */
+      quantity: number | null
+      /** Unit */
+      unit: string | null
+      /** Note */
+      note: string | null
+      /** Ingredient Id */
+      ingredient_id: number
+      /** Name */
+      name: string
+      /** Aisle */
+      aisle: string
+    }
+    /** RecipeOut */
+    RecipeOut: {
+      /** Id */
+      id: number
+      /** Title */
+      title: string
+      /** Servings */
+      servings: number | null
+      /** Minutes */
+      minutes: number | null
+      /** Tags */
+      tags: string[]
+      /** Source Kind */
+      source_kind: string
+      /** Image Id */
+      image_id: number | null
+      /** Ingredient Count */
+      ingredient_count: number
+      /** Source Url */
+      source_url: string | null
+      /** Steps */
+      steps: string[]
+      /** Lines */
+      lines: components['schemas']['RecipeLineOut'][]
+    }
+    /** RecipeSummary */
+    RecipeSummary: {
+      /** Id */
+      id: number
+      /** Title */
+      title: string
+      /** Servings */
+      servings: number | null
+      /** Minutes */
+      minutes: number | null
+      /** Tags */
+      tags: string[]
+      /** Source Kind */
+      source_kind: string
+      /** Image Id */
+      image_id: number | null
+      /** Ingredient Count */
+      ingredient_count: number
+    }
+    /** TextImport */
+    TextImport: {
+      /** Text */
+      text: string
+      /** Url */
+      url?: string | null
     }
     /** ValidationError */
     ValidationError: {
@@ -534,6 +866,360 @@ export interface operations {
         }
         content: {
           'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  import_link_api_import_link_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LinkImport']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeDraft']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  import_text_api_import_text_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['TextImport']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeDraft']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  import_image_api_import_image_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'multipart/form-data': components['schemas']['Body_import_image_api_import_image_post']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeDraft']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  get_upload_api_uploads__upload_id__get: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        upload_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  list_recipes_api_recipes_get: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeSummary'][]
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  create_recipe_api_recipes_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RecipeIn']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      201: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  get_recipe_api_recipes__recipe_id__get: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        recipe_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  update_recipe_api_recipes__recipe_id__put: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        recipe_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RecipeIn']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['RecipeOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  delete_recipe_api_recipes__recipe_id__delete: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        recipe_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  list_ingredients_api_ingredients_get: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['IngredientOut'][]
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  list_aisles_api_aisles_get: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': string[]
         }
       }
     }

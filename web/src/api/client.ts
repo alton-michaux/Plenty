@@ -8,6 +8,13 @@ export type AuthStatus = S['AuthStatus']
 export type Household = S['HouseholdOut']
 export type HouseholdIn = S['HouseholdIn']
 export type Slot = HouseholdIn['kids_from_slot']
+export type RecipeDraft = S['RecipeDraft']
+export type DraftLine = S['DraftLine']
+export type RecipeIn = S['RecipeIn']
+export type LineIn = S['LineIn']
+export type Recipe = S['RecipeOut']
+export type RecipeSummary = S['RecipeSummary']
+export type Ingredient = S['IngredientOut']
 
 export class ApiError extends Error {
   readonly status: number
