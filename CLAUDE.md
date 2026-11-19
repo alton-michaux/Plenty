@@ -77,7 +77,8 @@ docker build -t plenty .                  # what Render builds
 - Link imports go through `app/services/fetch.py` (public IPs only, size/time caps). Never point it
   at store sites.
 - Secrets only in env vars. Add new ones to `.env.example` and `render.yaml` (`sync: false`).
-- Commit after each working feature, on `dev`.
+- Never commit to `dev` directly: branch per phase or feature (e.g. `phase-2/receipts`), commit
+  each working feature there, push the branch and open a PR into `dev`. Render deploys `dev`.
 - UI copy and layout follow `design/mockups/`. Tokens are in `web/src/index.css` (`@theme`).
 
 ## Share target (non-obvious)
