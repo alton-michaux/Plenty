@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import type { Household, HouseholdIn, Slot } from '../api/client'
 import { ErrorText } from '../components/Field'
 import { toCents } from '../lib/format'
-import { useSaveHousehold } from '../lib/hooks'
+import { useSaveHousehold, useSaveStaples, useStaples } from '../lib/hooks'
 import { DAYS, SLOTS, kidDays } from '../lib/week'
 
 const DEFAULTS: HouseholdIn = {
@@ -18,6 +18,9 @@ const DEFAULTS: HouseholdIn = {
   kids_to_slot: 'lunch',
 }
 
+// Always on hand; they start each list marked 'in pantry'.
+const DEFAULT_STAPLES = ['eggs', 'milk', 'bread', 'coffee', 'rice', 'salt', 'black pepper', 'olive oil']
+
 // Sun-first, like the mockup's day row
 const WEEK = [6, 0, 1, 2, 3, 4, 5]
 
@@ -25,6 +28,11 @@ const WEEK = [6, 0, 1, 2, 3, 4, 5]
 export default function SetupPage({ household }: { household?: Household }) {
   const navigate = useNavigate()
   const save = useSaveHousehold()
+  const saveStaples = useSaveStaples()
+  const { data: savedStaples } = useStaples()
+  const [staples, setStaples] = useState<string[] | null>(null)
+  const [newStaple, setNewStaple] = useState('')
+  const staplesShown = staples ?? (household ? (savedStaples ?? []) : DEFAULT_STAPLES)
   const [form, setForm] = useState<HouseholdIn>(
     household ? { ...household, anchor_payday: household.period.next_payday } : DEFAULTS,
   )
@@ -35,11 +43,21 @@ export default function SetupPage({ household }: { household?: Household }) {
   const stores = form.stores ?? []
   const home = kidDays(form as Household)
 
+  const addStaple = () => {
+    const n = newStaple.trim().toLowerCase()
+    if (n && !staplesShown.includes(n)) setStaples([...staplesShown, n])
+    setNewStaple('')
+  }
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
     const cents = toCents(budget)
     if (!cents) return
-    save.mutate({ ...form, budget_cents: cents }, { onSuccess: () => household && navigate('/plan') })
+    // Staples save first: the household save swaps this screen out on first launch
+    const next = () =>
+      save.mutate({ ...form, budget_cents: cents }, { onSuccess: () => household && navigate('/plan') })
+    if (staples !== null || !household) saveStaples.mutate(staplesShown, { onSuccess: next })
+    else next()
   }
 
   return (
@@ -154,7 +172,39 @@ export default function SetupPage({ household }: { household?: Household }) {
             </button>
           </div>
         </div>
-        <ErrorText error={save.error} />
+        <h2 className="section-label mx-0.5 mt-[18px] mb-2.5">Staples you always have</h2>
+        <div className="mb-1.5 flex flex-wrap gap-2">
+          {staplesShown.map((name) => (
+            <button
+              key={name}
+              type="button"
+              className="chip-on"
+              aria-label={`Remove ${name}`}
+              onClick={() => setStaples(staplesShown.filter((x) => x !== name))}
+            >
+              {name} ×
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <input
+            placeholder="Add a staple"
+            value={newStaple}
+            onChange={(e) => setNewStaple(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                addStaple()
+              }
+            }}
+            className="min-w-0 flex-1"
+          />
+          <button type="button" onClick={addStaple} className="text-sm font-semibold text-brand">
+            + Add
+          </button>
+        </div>
+        <p className="mx-0.5 mt-2 text-xs text-faint">These start each list marked “in pantry”.</p>
+        <ErrorText error={save.error ?? saveStaples.error} />
       </div>
 
       <div className="sticky bottom-0 border-t border-[#EAE4DA] bg-white px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">

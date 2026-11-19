@@ -252,6 +252,131 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/plan': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get Week */
+    get: operations['get_week_api_plan_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/plan/{day}/{slot}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Put Entry */
+    put: operations['put_entry_api_plan__day___slot__put']
+    post?: never
+    /** Delete Entry */
+    delete: operations['delete_entry_api_plan__day___slot__delete']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get List */
+    get: operations['get_list_api_list_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/list/rebuild': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Rebuild List */
+    post: operations['rebuild_list_api_list_rebuild_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/list/items/{item_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post?: never
+    /** Delete Item */
+    delete: operations['delete_item_api_list_items__item_id__delete']
+    options?: never
+    head?: never
+    /** Patch Item */
+    patch: operations['patch_item_api_list_items__item_id__patch']
+    trace?: never
+  }
+  '/api/list/items': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Add Item */
+    post: operations['add_item_api_list_items_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/pantry/staples': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get Staples */
+    get: operations['get_staples_api_pantry_staples_get']
+    /**
+     * Put Staples
+     * @description Replace the staples: things always on hand that start the week marked 'in pantry'.
+     */
+    put: operations['put_staples_api_pantry_staples_put']
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/health': {
     parameters: {
       query?: never
@@ -329,6 +454,38 @@ export interface components {
        * @default false
        */
       matched: boolean
+    }
+    /** EntryIn */
+    EntryIn: {
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: 'recipe' | 'out' | 'leftovers'
+      /** Recipe Id */
+      recipe_id?: number | null
+      /** Servings */
+      servings?: number | null
+      /** Amount Cents */
+      amount_cents?: number | null
+    }
+    /** EntryOut */
+    EntryOut: {
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: 'recipe' | 'out' | 'leftovers'
+      /** Recipe Id */
+      recipe_id: number | null
+      /** Recipe Title */
+      recipe_title: string | null
+      /** Recipe Servings */
+      recipe_servings: number | null
+      /** Servings */
+      servings: number
+      /** Amount Cents */
+      amount_cents: number | null
     }
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -433,6 +590,39 @@ export interface components {
       /** Aisle */
       aisle: string
     }
+    /** ItemIn */
+    ItemIn: {
+      /** Name */
+      name: string
+    }
+    /** ItemOut */
+    ItemOut: {
+      /** Id */
+      id: number
+      /** Name */
+      name: string
+      /** Aisle */
+      aisle: string
+      /** Amount */
+      amount: string
+      /** Used In */
+      used_in: string[]
+      /** Manual */
+      manual: boolean
+      /** In Pantry */
+      in_pantry: boolean
+      /** Checked */
+      checked: boolean
+      /** Ingredient Id */
+      ingredient_id: number | null
+    }
+    /** ItemPatch */
+    ItemPatch: {
+      /** Checked */
+      checked?: boolean | null
+      /** In Pantry */
+      in_pantry?: boolean | null
+    }
     /** LineIn */
     LineIn: {
       /** Original */
@@ -460,6 +650,30 @@ export interface components {
        * Format: uri
        */
       url: string
+    }
+    /** ListOut */
+    ListOut: {
+      /**
+       * Week Start
+       * Format: date
+       */
+      week_start: string
+      /**
+       * Week End
+       * Format: date
+       */
+      week_end: string
+      /**
+       * Built At
+       * Format: date-time
+       */
+      built_at: string
+      /** Stale */
+      stale: boolean
+      /** Meals */
+      meals: number
+      /** Items */
+      items: components['schemas']['ItemOut'][]
     }
     /** LoginBody */
     LoginBody: {
@@ -614,6 +828,29 @@ export interface components {
       /** Ingredient Count */
       ingredient_count: number
     }
+    /** SlotOut */
+    SlotOut: {
+      /**
+       * Day
+       * Format: date
+       */
+      day: string
+      /**
+       * Slot
+       * @enum {string}
+       */
+      slot: 'breakfast' | 'lunch' | 'dinner'
+      /** Kids Home */
+      kids_home: boolean
+      /** Default Servings */
+      default_servings: number
+      entry: components['schemas']['EntryOut'] | null
+    }
+    /** Staples */
+    Staples: {
+      /** Names */
+      names: string[]
+    }
     /** TextImport */
     TextImport: {
       /** Text */
@@ -633,6 +870,23 @@ export interface components {
       input?: unknown
       /** Context */
       ctx?: Record<string, never>
+    }
+    /** WeekOut */
+    WeekOut: {
+      /**
+       * Start
+       * Format: date
+       */
+      start: string
+      /**
+       * End
+       * Format: date
+       */
+      end: string
+      /** Slots */
+      slots: components['schemas']['SlotOut'][]
+      /** Period Out Cents */
+      period_out_cents: number
     }
   }
   responses: never
@@ -1220,6 +1474,347 @@ export interface operations {
         }
         content: {
           'application/json': string[]
+        }
+      }
+    }
+  }
+  get_week_api_plan_get: {
+    parameters: {
+      query?: {
+        /** @description Any day in the week; defaults to today */
+        start?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['WeekOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  put_entry_api_plan__day___slot__put: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        day: string
+        slot: 'breakfast' | 'lunch' | 'dinner'
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['EntryIn']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['EntryOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  delete_entry_api_plan__day___slot__delete: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        day: string
+        slot: 'breakfast' | 'lunch' | 'dinner'
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  get_list_api_list_get: {
+    parameters: {
+      query?: {
+        start?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['ListOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  rebuild_list_api_list_rebuild_post: {
+    parameters: {
+      query?: {
+        start?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['ListOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  delete_item_api_list_items__item_id__delete: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        item_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown
+        }
+        content?: never
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  patch_item_api_list_items__item_id__patch: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        item_id: number
+      }
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ItemPatch']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['ItemOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  add_item_api_list_items_post: {
+    parameters: {
+      query?: {
+        start?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ItemIn']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      201: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['ItemOut']
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  get_staples_api_pantry_staples_get: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': string[]
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
+        }
+      }
+    }
+  }
+  put_staples_api_pantry_staples_put: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: {
+        plenty_session?: string | null
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['Staples']
+      }
+    }
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': string[]
+        }
+      }
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['HTTPValidationError']
         }
       }
     }

@@ -188,6 +188,7 @@ _AISLE_KEYWORDS: tuple[tuple[str, tuple[str, ...]], ...] = (
         "sauce", "canned", "tuna", "lentil", "oat", "cereal", "peanut butter", "honey",
         "salsa", "ketchup", "mustard", "mayo", "soy sauce", "tomato paste", "crushed tomato",
         "tomato sauce", "black bean", "pinto bean", "kidney bean", "olive oil",
+        "chicken broth", "chicken stock", "beef broth", "beef stock", "vegetable broth",
     )),
 )  # fmt: skip
 

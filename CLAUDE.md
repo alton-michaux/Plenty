@@ -25,8 +25,11 @@ Full brief: the build plan the owner wrote (not in repo). Visual spec: `design/m
 - PWA is hand-rolled like Buoy (no vite-plugin-pwa): `web/public/manifest.webmanifest` + `sw.js`.
 - One Docker image: Vite build served by FastAPI from the same origin; `alembic upgrade head` on start.
 - Render free tier (`render.yaml`, deploys `dev`), Postgres on Neon (project `plenty`).
-- Later: Anthropic SDK (recipe/receipt extraction, phase 1/2), object storage for photos (bytea to
-  start), USDA FoodData Central (phase 5).
+- Anthropic Python SDK (2.x, on `httpx2`) for recipe extraction: `app/services/extract.py`,
+  `claude-opus-5-5` at `effort: "low"`, structured output via `beta.messages.parse`, server-side
+  refusal `fallbacks: "default"`. Key: `PLENTY_ANTHROPIC_API_KEY` (or `ANTHROPIC_API_KEY`).
+  Without a key, imports fall back to `meal.ingredients.parse_line`.
+- Photos: `meal.upload` bytea for now. Later: object storage, USDA FoodData Central (phase 5).
 
 ## Layout and the Buoy-merge rules
 
@@ -68,7 +71,11 @@ docker build -t plenty .                  # what Render builds
 - After any API change: run the backend and `npm run gen:api`; commit `schema.d.ts`.
 - Every automatic match (recipe text or receipt line to a canonical Ingredient) gets a confirm step,
   and corrections are stored and reused.
-- Log model usage from the first Claude call; cache every extraction.
+- Every model call goes through `extract._run`: cached by input hash and logged (tokens, cost in
+  micro-dollars) in `meal.extraction`. Bump `PROMPT_VERSION` when the prompt or schema changes.
+- Tests never call the model: an autouse fixture blanks the key; use the `fake_model` fixture.
+- Link imports go through `app/services/fetch.py` (public IPs only, size/time caps). Never point it
+  at store sites.
 - Secrets only in env vars. Add new ones to `.env.example` and `render.yaml` (`sync: false`).
 - Commit after each working feature, on `dev`.
 - UI copy and layout follow `design/mockups/`. Tokens are in `web/src/index.css` (`@theme`).
@@ -83,7 +90,7 @@ reads it same-origin with the session cookie. If the worker isn't active yet, Fa
 ## Phases (one at a time; show a short plan and wait for OK before each)
 
 - [x] **0. Setup**: scaffold, schema, deploy, installable PWA with share target.
-- [ ] **1. Plan and list**: recipe box (share sheet, link, text, screenshot -> extraction -> confirm
+- [x] **1. Plan and list** (built; done when a real kid week is shopped in one trip): recipe box (share sheet, link, text, screenshot -> extraction -> confirm
       screen), planner with kid and solo days, merged list by aisle, shop mode.
       Done: a real kid week planned and shopped in one trip.
 - [ ] **2. Budget and price book**: receipt photo -> line items -> Products + PriceObservations,
@@ -96,8 +103,19 @@ reads it same-origin with the session cookie. If the worker isn't active yet, Fa
 
 Nothing past phase 2 starts until phase 2 passes.
 
-## Data model (target; only `household` exists so far)
+## Data model
 
-Household, PayPeriod (computed by `meal.schedule.pay_period`), Recipe, Ingredient (canonical),
-RecipeIngredient, PlanEntry, Product, PriceObservation, GroceryListItem, Receipt, PantryItem,
-FoodSpend. Recipe text and receipt text both map to a canonical Ingredient.
+Built: Household, Ingredient (canonical, per user, `key` = `normalize_name`), IngredientAlias
+(confirmed recipe wording -> ingredient), Upload, Recipe, RecipeIngredient, PlanEntry (recipe | out
+| leftovers), PantryItem (staples), GroceryList (one per Wed-Tue week) + GroceryListItem,
+Extraction. PayPeriod is computed (`meal.schedule.pay_period`), not stored.
+Phase 2 adds: Product, PriceObservation, Receipt, FoodSpend. Receipt text maps to the same
+canonical Ingredient via aliases.
+
+## Planning rules
+
+- Weeks run from the kids' arrival weekday (Wed). One list and one trip per week.
+- Plan every dinner, plus lunch on a day the kids are home for lunch but not dinner (`week_slots`).
+- Default servings: 1 + kids inside the kid window, else 1. Lines scale by servings / recipe yield.
+- Plan changes mark that week's list stale; rebuild keeps checkmarks and hand-added items.
+- Shop mode caches the list in localStorage; check-offs are optimistic and replay when back online.

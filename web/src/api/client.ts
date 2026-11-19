@@ -15,6 +15,11 @@ export type LineIn = S['LineIn']
 export type Recipe = S['RecipeOut']
 export type RecipeSummary = S['RecipeSummary']
 export type Ingredient = S['IngredientOut']
+export type Week = S['WeekOut']
+export type PlanSlot = S['SlotOut']
+export type EntryIn = S['EntryIn']
+export type GroceryList = S['ListOut']
+export type GroceryItem = S['ItemOut']
 
 export class ApiError extends Error {
   readonly status: number

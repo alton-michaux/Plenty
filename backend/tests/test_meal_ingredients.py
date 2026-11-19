@@ -63,6 +63,7 @@ def test_normalize_name(raw, key):
         ("bell peppers", "Produce"),
         ("black pepper", "Spices & baking"),
         ("tomato paste", "Pantry"),
+        ("chicken broth", "Pantry"),
         ("roma tomatoes", "Produce"),
         ("chicken thighs", "Meat & seafood"),
         ("shredded cheese", "Dairy & refrigerated"),

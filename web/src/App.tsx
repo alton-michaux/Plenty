@@ -1,6 +1,7 @@
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth, useHousehold } from './lib/hooks'
 import type { Household } from './api/client'
+import ListPage from './pages/ListPage'
 import LoginPage from './pages/LoginPage'
 import PlanPage from './pages/PlanPage'
 import RecipePage from './pages/RecipePage'
@@ -8,6 +9,7 @@ import RecipesPage from './pages/RecipesPage'
 import { EditRecipePage, ReviewDraftPage } from './pages/ReviewRecipePage'
 import SetupPage from './pages/SetupPage'
 import SharePage from './pages/SharePage'
+import ShopPage from './pages/ShopPage'
 import StubPage from './pages/StubPage'
 
 // Icons and order from design/mockups (bottom nav).
@@ -45,6 +47,7 @@ function SignedIn() {
       <Route path="/recipes/review" element={<ReviewDraftPage />} />
       <Route path="/recipes/:id/edit" element={<EditRecipePage />} />
       <Route path="/setup" element={<SetupPage household={household} />} />
+      <Route path="/shop" element={<ShopPage household={household} />} />
       <Route path="*" element={<Tabs household={household} />} />
     </Routes>
   )
@@ -59,10 +62,7 @@ function Tabs({ household }: { household: Household }) {
           <Route path="/plan" element={<PlanPage household={household} />} />
           <Route path="/recipes" element={<RecipesPage />} />
           <Route path="/recipes/:id" element={<RecipePage />} />
-          <Route
-            path="/list"
-            element={<StubPage title="Grocery list" note="One merged list by aisle, plus shop mode, coming next." />}
-          />
+          <Route path="/list" element={<ListPage />} />
           <Route
             path="/spending"
             element={<StubPage title="Spending" note="Receipts, the eating-out log and budget pace land in phase 2." />}
