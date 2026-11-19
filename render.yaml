@@ -15,3 +15,6 @@ services:
         sync: false
       - key: PLENTY_COOKIE_SECURE
         value: "true"
+      # Claude key for reading captions and screenshots (its own Console workspace + spend limit).
+      - key: PLENTY_ANTHROPIC_API_KEY
+        sync: false

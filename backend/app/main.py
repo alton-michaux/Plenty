@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.api import auth, household
+from app.api import auth, household, recipes
 from app.db import config
 
 app = FastAPI(title="Plenty", version="0.1.0")
@@ -29,7 +29,7 @@ async def security_headers(request: Request, call_next):
     return response
 
 
-for router in (auth.router, household.router):
+for router in (auth.router, household.router, recipes.router):
     app.include_router(router, prefix="/api")
 
 

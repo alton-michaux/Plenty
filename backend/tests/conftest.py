@@ -60,3 +60,42 @@ def signup(c: TestClient, email: str = "me@example.com") -> TestClient:
 @pytest.fixture
 def client(new_client) -> TestClient:
     return signup(new_client())
+
+
+@pytest.fixture(autouse=True)
+def no_model_calls(monkeypatch):
+    """Tests never reach the real API, even with a key in backend/.env."""
+    from app.services import extract
+
+    def refuse(_content):
+        raise AssertionError("Unexpected model call; use the fake_model fixture")
+
+    monkeypatch.setattr(config, "anthropic_api_key", None)
+    monkeypatch.setattr(extract, "call_model", refuse)
+
+
+@pytest.fixture
+def fake_model(monkeypatch):
+    """Turn the model 'on' and answer every call with whatever the test sets in .reply."""
+    from app.services import extract
+
+    class Fake:
+        reply: "extract.ExtractedRecipe | None" = None
+        calls: list = []
+
+        def __call__(self, content):
+            self.calls.append(content)
+            meta = {
+                "model": "claude-opus-5-5",
+                "request_id": "req_test",
+                "input_tokens": 1000,
+                "output_tokens": 500,
+                "cost_micros": 14_000,
+            }
+            return self.reply, meta
+
+    fake = Fake()
+    fake.calls = []
+    monkeypatch.setattr(config, "anthropic_api_key", "test-key")
+    monkeypatch.setattr(extract, "call_model", fake)
+    return fake

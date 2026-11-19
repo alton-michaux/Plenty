@@ -1,6 +1,6 @@
 from collections.abc import Iterator
 
-from pydantic import field_validator
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
@@ -26,7 +26,9 @@ class Config(BaseSettings):
     static_dir: str | None = None
     # Reads recipes from captions, pasted text and screenshots. Without it, imports fall back to
     # the plain-text parser (links with recipe data and pasted ingredient lists still work).
-    anthropic_api_key: str | None = None
+    anthropic_api_key: str | None = Field(
+        None, validation_alias=AliasChoices("PLENTY_ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY")
+    )
     anthropic_model: str = "claude-opus-5-5"
 
     @field_validator("database_url")
